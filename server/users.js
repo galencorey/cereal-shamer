@@ -3,6 +3,7 @@
 const epilogue = require('./epilogue')
 const db = require('APP/db')
 const User = require('APP/db/models/user')
+const Cereal = require('APP/db/models/cereal')
 const UserCereals = db.models.UserCereals
 
 
@@ -28,14 +29,17 @@ userRoutes.get('/:userId/totalCount', function(req, res, next){
 
 userRoutes.put('/:userId/addCereal/:cerealId', function(req, res, next){
 	console.log("add cereal route")
-	UserCereals.create({
+	var create = UserCereals.create({
 		user_id: req.params.userId,
 		cereal_id: req.params.cerealId
 	})
-	.then(() => {
-		return User.findById(req.params.userId)
+	var incrementUser = User.findById(req.params.userId)
 		.then(user => user.increment('shame'))
-	})
+
+	var incrementCereal = Cereal.findById(req.params.cerealId)
+		.then(cereal => cereal.increment('deaths'))
+
+	Promise.all([create, incrementUser, incrementCereal])
 	.then(() => res.sendStatus(200))
 })
 

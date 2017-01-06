@@ -8,6 +8,10 @@ const Cereal = db.define('cereals', {
   votes: {
     type: Sequelize.INTEGER,
     defaultValue: 0
+  },
+  deaths: {
+  	type: Sequelize.INTEGER, 
+  	defaultValue: 0
   }
 })
 

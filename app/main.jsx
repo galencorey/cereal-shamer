@@ -7,7 +7,7 @@ import {connect, Provider} from 'react-redux'
 import store from './store'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
-
+import ShameVisualizer from './components/ShameVisualizer'
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
 ) (
@@ -25,6 +25,7 @@ render (
     <Router history={browserHistory}>
       <Route path="/" component={ExampleApp}>
       </Route>
+      <Route path="/data" component={ShameVisualizer}/>
     </Router>
   </Provider>,
   document.getElementById('main')
