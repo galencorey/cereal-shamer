@@ -7,13 +7,15 @@ const Cereal = require('APP/db/models/cereal')
 const UserCereals = db.models.UserCereals
 
 
-const userRoutes = require('express').Router() 
+const userRoutes = require('express').Router()
 
 userRoutes.get('/', function(req, res, next){
+	console.log('in expected route')
 	User.findAll()
 	.then(users => {
 		res.json(users)
 	})
+	.catch(next)
 })
 
 userRoutes.get('/:userId/totalCount', function(req, res, next){
@@ -36,11 +38,14 @@ userRoutes.put('/:userId/addCereal/:cerealId', function(req, res, next){
 	var incrementUser = User.findById(req.params.userId)
 		.then(user => user.increment('shame'))
 
+
 	var incrementCereal = Cereal.findById(req.params.cerealId)
 		.then(cereal => cereal.increment('deaths'))
 
 	Promise.all([create, incrementUser, incrementCereal])
 	.then(() => res.sendStatus(200))
+
+	})
 })
 
 userRoutes.get('/weekTotal', function(req, res, next){
@@ -60,5 +65,5 @@ const users = epilogue.resource({
 const {mustBeLoggedIn, selfOnly, forbidden} = epilogue.filters
 users.delete.auth(mustBeLoggedIn)
 users.delete.auth(selfOnly('delete'))
-users.list.auth()
+//users.list.auth()
 users.read.auth(mustBeLoggedIn)
