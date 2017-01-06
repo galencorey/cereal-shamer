@@ -15,7 +15,7 @@ const ExampleApp = connect(
   ({ user, children }) =>
     <div>
       <nav>
-        {user ? <UsersList /> : <Login/>}
+        {user ? <WhoAmI /> : <Login/>}
       </nav>
       {children}
     </div>
@@ -26,6 +26,7 @@ render (
     <Router history={browserHistory}>
       <Route path="/" component={ExampleApp}>
       </Route>
+      <Route path="/users" component={UsersList} />
     </Router>
   </Provider>,
   document.getElementById('main')
