@@ -6,13 +6,15 @@ const User = require('APP/db/models/user')
 const UserCereals = db.models.UserCereals
 
 
-const userRoutes = require('express').Router() 
+const userRoutes = require('express').Router()
 
 userRoutes.get('/', function(req, res, next){
+	console.log('in expected route')
 	User.findAll()
 	.then(users => {
 		res.json(users)
 	})
+	.catch(next)
 })
 
 userRoutes.get('/:userId/totalCount', function(req, res, next){
@@ -56,5 +58,5 @@ const users = epilogue.resource({
 const {mustBeLoggedIn, selfOnly, forbidden} = epilogue.filters
 users.delete.auth(mustBeLoggedIn)
 users.delete.auth(selfOnly('delete'))
-users.list.auth()
+//users.list.auth()
 users.read.auth(mustBeLoggedIn)
