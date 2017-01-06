@@ -9,7 +9,9 @@ const seedCereals = () => db.Promise.map([
   {name: 'Honey Comb'},
   {name: 'Fruity Pebbles'},
   {name: 'Cinnamon Toast Crunch'},
-  {name: "Reese's Puffs"}
+  {name: "Reese's Puffs"}, 
+  {name: 'Abominable Combo'}, 
+  {name: 'Mystery Flavor'}
 ], cereal => db.model('cereals').create(cereal))
 
 db.didSync

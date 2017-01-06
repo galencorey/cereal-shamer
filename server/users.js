@@ -3,24 +3,34 @@
 const epilogue = require('./epilogue')
 const db = require('APP/db')
 const User = require('APP/db/models/user')
+const UserCereals = db.models.UserCereals
 
 
-const customUserRoutes = require('express').Router() 
+const userRoutes = require('express').Router() 
 
-customUserRoutes.get('/', function(req, res, next){
+userRoutes.get('/', function(req, res, next){
 	User.findAll()
 	.then(users => {
 		res.json(users)
 	})
 })
 
-customUserRoutes.get('/weekTotal', function(req, res, next){
+userRoutes.put('/:userId/addCereal/:cerealId', function(req, res, next){
+	console.log("add cereal route")
+	UserCereals.create({
+		user_id: req.params.userId,
+		cereal_id: req.params.cerealId
+	})
+	.then(() => res.sendStatus(200))
+})
+
+userRoutes.get('/weekTotal', function(req, res, next){
 
 })
 
 
 
-module.exports = customUserRoutes
+module.exports = userRoutes
 
 // Epilogue will automatically create standard RESTful routes
 const users = epilogue.resource({
