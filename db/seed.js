@@ -4,7 +4,7 @@ const seedUsers = () => db.Promise.map([
   {name: 'Galen', email: 'galen@example.com', password: '1234', photo: './images/galen.jpg'},
   {name: 'Ally', email: 'ally@example.com', password: '1234', photo: './images/ally.jpg'},
   {name: 'Scout', email: 'scout@example.com', password: '1234', photo: './images/scout.jpg'},
-  {name: 'Jeff', email: 'jeff@example.com', password: '1234', photo: './images/jeff.jpg'},
+  {name: 'Jeff', email: 'jeff@example.com', password: '1234', photo: './images/jeff.png'},
 ], user => db.model('users').create(user))
 
 const seedCereals = () => db.Promise.map([

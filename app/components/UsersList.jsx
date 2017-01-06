@@ -16,9 +16,10 @@ export class UsersList extends React.Component{
           {this.props.users && this.props.users.map(user=>{
             return (
               <li className="list-group-item" key={user.id}>
-                <img src={user.photo} alt={user.name}/>
-                <span>{user.name}</span>
-                <span className="badge">{user.count}</span>
+                <img src={user.photo} alt={user.name} style={{width: 100}}/>
+                <button className="btn btn-primary" style={{margin: 20}}>I saw {user.name} eating cereal!</button>
+                <span className="badge" style={{textSize: 15,
+                  margin: 40}}>{user.shame}</span>
               </li>)
           })}
         </ul>
