@@ -13,6 +13,11 @@ const User = db.define('users', {
 			notEmpty: true,
 		}
   },
+  photo: Sequelize.STRING,
+  shame: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
 
   // We support oauth, so users may or may not have passwords.
   password_digest: Sequelize.STRING,
