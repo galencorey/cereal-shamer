@@ -15,11 +15,26 @@ userRoutes.get('/', function(req, res, next){
 	})
 })
 
+userRoutes.get('/:userId/totalCount', function(req, res, next){
+	UserCereals.findAndCountAll({
+		where: {
+			user_id: req.params.userId
+		}
+	})
+	.then(result => {
+		res.json(result)
+	})
+})
+
 userRoutes.put('/:userId/addCereal/:cerealId', function(req, res, next){
 	console.log("add cereal route")
 	UserCereals.create({
 		user_id: req.params.userId,
 		cereal_id: req.params.cerealId
+	})
+	.then(() => {
+		return User.findById(req.params.userId)
+		.then(user => user.increment('shame'))
 	})
 	.then(() => res.sendStatus(200))
 })
