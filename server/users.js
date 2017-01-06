@@ -2,10 +2,23 @@
 
 const epilogue = require('./epilogue')
 const db = require('APP/db')
+const User = require('APP/db/models/user')
+
 
 const customUserRoutes = require('express').Router() 
 
-// Custom routes go here.
+customUserRoutes.get('/', function(req, res, next){
+	User.findAll()
+	.then(users => {
+		res.json(users)
+	})
+})
+
+customUserRoutes.get('/weekTotal', function(req, res, next){
+
+})
+
+
 
 module.exports = customUserRoutes
 
@@ -18,5 +31,5 @@ const users = epilogue.resource({
 const {mustBeLoggedIn, selfOnly, forbidden} = epilogue.filters
 users.delete.auth(mustBeLoggedIn)
 users.delete.auth(selfOnly('delete'))
-users.list.auth(forbidden('cannot list users'))
+users.list.auth()
 users.read.auth(mustBeLoggedIn)

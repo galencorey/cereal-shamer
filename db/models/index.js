@@ -5,5 +5,9 @@
 // to get access to the User model.
 
 const User = require('./user')
+const Cereal = require('./cereal')
 
-module.exports = {User}
+User.belongsToMany(Cereal, {through: 'UserCereals'})
+Cereal.belongsToMany(User, {through: 'UserCereals'})
+
+module.exports = {User, Cereal}
