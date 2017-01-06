@@ -5,5 +5,8 @@
 // to get access to the User model.
 
 const User = require('./user')
+const Cereal = require('./cereal')
+const UserCereals = require('./userCereal')
 
-module.exports = {User}
+
+module.exports = {User, Cereal}

@@ -2,12 +2,50 @@
 
 const epilogue = require('./epilogue')
 const db = require('APP/db')
+const User = require('APP/db/models/user')
+const UserCereals = db.models.UserCereals
 
-const customUserRoutes = require('express').Router() 
 
-// Custom routes go here.
+const userRoutes = require('express').Router() 
 
-module.exports = customUserRoutes
+userRoutes.get('/', function(req, res, next){
+	User.findAll()
+	.then(users => {
+		res.json(users)
+	})
+})
+
+userRoutes.get('/:userId/totalCount', function(req, res, next){
+	UserCereals.findAndCountAll({
+		where: {
+			user_id: req.params.userId
+		}
+	})
+	.then(result => {
+		res.json(result)
+	})
+})
+
+userRoutes.put('/:userId/addCereal/:cerealId', function(req, res, next){
+	console.log("add cereal route")
+	UserCereals.create({
+		user_id: req.params.userId,
+		cereal_id: req.params.cerealId
+	})
+	.then(() => {
+		return User.findById(req.params.userId)
+		.then(user => user.increment('shame'))
+	})
+	.then(() => res.sendStatus(200))
+})
+
+userRoutes.get('/weekTotal', function(req, res, next){
+
+})
+
+
+
+module.exports = userRoutes
 
 // Epilogue will automatically create standard RESTful routes
 const users = epilogue.resource({
@@ -18,5 +56,5 @@ const users = epilogue.resource({
 const {mustBeLoggedIn, selfOnly, forbidden} = epilogue.filters
 users.delete.auth(mustBeLoggedIn)
 users.delete.auth(selfOnly('delete'))
-users.list.auth(forbidden('cannot list users'))
+users.list.auth()
 users.read.auth(mustBeLoggedIn)
