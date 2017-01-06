@@ -1,4 +1,5 @@
 import React from 'react'
+import WhoAmI from './WhoAmI'
 
 export default class UsersList extends React.Component{
   constructor(props){
@@ -6,6 +7,12 @@ export default class UsersList extends React.Component{
   }
 
   render(){
-    return <p>Check out this cool list of users!</p>
+    return (
+      <div>
+        <WhoAmI />
+        <p>Check out this cool list of users!</p>
+      </div>
+    )
   }
 }
+
