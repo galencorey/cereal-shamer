@@ -38,7 +38,7 @@ userRoutes.put('/:userId/addCereal/:cerealId', function(req, res, next){
 		return User.findById(req.params.userId)
 		.then(user => user.increment('shame'))
 	})
-	.then(() => res.sendStatus(200))
+	.then((user) => res.send(user))
 })
 
 userRoutes.get('/weekTotal', function(req, res, next){
